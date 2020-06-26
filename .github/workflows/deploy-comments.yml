@@ -1,0 +1,23 @@
+name: deploy-comments
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "comments/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd comments && docker build -t kaysongdocker/picspie-micro-comments .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: $${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_PASSWORD: $${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push kaysongdocker/picspie-micro-comments
+      - uses: digitalocean push kaysongdocker/picspie-micro-comments
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save picspie
+      - run: kubectl rollout restart deployment comments-depl
