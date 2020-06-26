@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/api/auth/:id", async (req: Request, res: Response) => {
   const user = await User.findById(req.params.id);
+  console.log(user);
   res.send(user);
 });
 
