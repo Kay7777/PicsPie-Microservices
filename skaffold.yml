@@ -1,0 +1,42 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: kaysongdocker/picspie-micro-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: kaysongdocker/picspie-micro-auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: kaysongdocker/picspie-micro-posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: kaysongdocker/picspie-micro-comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

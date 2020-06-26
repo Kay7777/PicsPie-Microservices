@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts
+  template:
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+        - name: posts
+          image: kaysongdocker/picspie-micro-posts
+          env:
+            - name: MONGO_URI
+              value: "mongodb://posts-mongo-srv:27017/posts"
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-access-key
+                  key: AWS_ACCESS_KEY
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret-key
+                  key: AWS_SECRET_KEY
+            - name: AWS_BUCKET
+              value: "picspie"
+            - name: AWS_REGION
+              value: "ca-central-1"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-srv
+spec:
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
