@@ -1,18 +1,22 @@
 # PicsPie Microservices version
 
+<h2>Introduction: </h2>
+<h3>This version uses microservices structure to implement client, post, comment, and auth servers with the Local => Github test => Digitalocean deployment CI pipeline.
+</h3>
+
 ## Technology
 
-1. Frontend: React, Redux (logger)
+1. Frontend: React, Redux (logger), BootStrap, Material UI
 2. Backend: Node.js, Express, Mongoose
 3. Authetication: Passport, Google-OAuth2.0, local-strategy, cookie-session
 4. Database: MongoDB, AWS S3, Redis
-5. Testing: Jest, Puppeteer, safe-buffer, keygrip
-6. Dev tools: Github, Postman, Travis CI, Heroku, BootStrap
+5. Testing: Postman, Travis CI, Github, Jest, Puppeteer, supertest
+6. Cloud Provider: AWS Elastic Beanstalker, Digitalocean, Heroku
 
 ## 2020.05.20
 
-implemented the user authentication system with passport local-strategy and google-oauth-strategy
-also Implemented image upload with AWS S3 and aws-sdk library.
+1. implemented the user authentication system with passport local-strategy and google-oauth-strategy
+2. Implemented image upload with AWS S3 and aws-sdk library.
 
 ## 2020.05.21
 
@@ -41,6 +45,7 @@ also Implemented image upload with AWS S3 and aws-sdk library.
 
 1. Redis Typescript cache method (in process)
 2. Add jest test files into each server
+3. deployed microservices to Digitalocean cloud provider
 
 ## Next:
 
@@ -57,6 +62,4 @@ also Implemented image upload with AWS S3 and aws-sdk library.
 
 ## TODO List -- technologies:
 
-3. Use Docker to optimze the deploy.
-4. Make it into Microservices to enhance the performance
-5. Add React & Redux liraries to optimize performance
+1. Add React & Redux liraries to optimize performance
